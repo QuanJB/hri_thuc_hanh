@@ -1,0 +1,1 @@
+This folder should contain image assets used by ur3_text_drawer.
