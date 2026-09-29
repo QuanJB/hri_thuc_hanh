@@ -1,6 +1,4 @@
-# ur_ws — Lệnh chạy mô phỏng UR3/UR3e
-
-Workspace ROS 2 Humble. Mỗi terminal mới đều phải chạy trước:
+Mỗi terminal mới đều phải chạy trước:
 
 ```bash
 source /opt/ros/humble/setup.bash
@@ -9,7 +7,7 @@ source ~/ur_ws/install/setup.bash
 
 ---
 
-## 0. Build (chỉ cần làm khi mới clone hoặc sau khi sửa code)
+## 0. Build
 
 ```bash
 cd ~/ur_ws
@@ -19,9 +17,6 @@ colcon build --packages-select ur_llm_planner ur_letter_writer
 source install/setup.bash
 ```
 
-> Không dùng `--symlink-install` cho `ur_llm_planner` (lỗi symlink với module Python).
-> Chỉ sửa `.py`/`.yaml`? Không cần build lại — file được cài qua symlink/`ament_python`.
-> Chỉ sửa `.cpp`? Bắt buộc build lại đúng package đó.
 
 ---
 
@@ -43,12 +38,8 @@ Build lại để nạp file:
 colcon build --packages-select ur_llm_planner
 ```
 
-(Hoặc không sửa file, truyền trực tiếp khi chạy planner ở Terminal 2 bên dưới:
-`-p student.name:="Ho Ten" -p student.id:=MSSV_CUA_BAN`)
 
----
-
-## 2. Chạy mô phỏng (Terminal 1 — dùng chung cho mục 3, 4, 5)
+## 2. Chạy mô phỏng (Terminal 1)
 
 ```bash
 source ~/ur_ws/install/setup.bash
@@ -56,16 +47,9 @@ ros2 launch ur_llm_planner sim.launch.py                 # UR3e (mặc định)
 # ros2 launch ur_llm_planner sim.launch.py ur_type:=ur3   # hoặc UR3
 ```
 
-Đợi tới khi log in dòng `Skill server san sang`. Máy yếu / WSL2:
-
-```bash
-ros2 launch ur_llm_planner sim.launch.py gazebo_gui:=false launch_rviz:=false
-ros2 launch ur_llm_planner sim.launch.py startup_delay:=15.0   # tăng thời gian chờ khởi động
-```
-
 ---
 
-## 3. Robot thao tác cơ bản (Terminal 2)
+## 3. Thao tác cơ bản (Terminal 2)
 
 Thao tác 1 vật, ví dụ: *"Please put the red cube in zone B."*
 
@@ -82,9 +66,6 @@ Gõ lệnh tại dấu nhắc `>>>`:
 >>> Đưa khối màu vàng vào vùng A.
 ```
 
-Terminal sẽ in `USER COMMAND` → `LLM PLAN` → `EXECUTION` (từng bước SUCCESS/FAILED) → `TASK SUCCESS`.
-
----
 
 ## 4. Robot thao tác nâng cao (Terminal 2 — cùng lệnh chạy như mục 3)
 
