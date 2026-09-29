@@ -170,28 +170,3 @@ colcon test-result --verbose
 python3 -m pytest src/ur_llm_planner/test -q
 ```
 
----
-
-## 8. Dừng mô phỏng và xử lý sự cố
-
-Dừng: **Ctrl+C** ở terminal chạy `ros2 launch`. Nếu Gazebo cũ không tắt hẳn, hai phiên mô phỏng
-chạy cùng lúc sẽ tranh nhau `/clock` (robot báo `EXECUTION_FAILED`). Dọn tiến trình còn sót:
-
-```bash
-ps -eo pid,comm | grep -E "ruby|move_group|skill_server|parameter_bridg|robot_state_pub|rviz2"
-kill -9 <pid> <pid> ...
-```
-
-| Hiện tượng | Cách xử lý |
-|---|---|
-| `Service /execute_skill chua san sang` | Terminal 1 chưa xong; đợi dòng `Skill server san sang` |
-| `LLM_ERROR: Khong ket noi duoc ...` | 9Router chưa chạy hoặc sai `llm.base_url` |
-| `LLM_ERROR: HTTP 401` | Sai/thiếu API key. Xoá key trong `config/llm.yaml`, dùng `-p llm.api_key:=""` + `NINEROUTER_API_KEY` |
-| `LLM_ERROR: Chua cau hinh llm.model` | Thêm `-p llm.model:=<ten_model>` |
-| `Nhiem vu ca nhan dung vat/vung khong co...` hoặc lỗi MSSV | Sửa lại `config/student_config.yaml` (mục 1) |
-| Khối trong Gazebo không đi theo robot | Kiểm tra `ros2 service list \| grep set_pose` |
-| `ros2: command not found` / không thấy package | Thiếu `source /opt/ros/humble/setup.bash` và `source ~/ur_ws/install/setup.bash` |
-| VSCode gạch đỏ `#include` | Build với `--cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`, sau đó *Developer: Reload Window* |
-
-Chi tiết kiến trúc, luồng LLM → validator → skill, danh sách skill và mã trạng thái:
-`src/ur_llm_planner/README.md`. Chi tiết font chữ và mặt phẳng vẽ: `src/ur_letter_writer/README.md`.
