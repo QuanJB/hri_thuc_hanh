@@ -1,4 +1,20 @@
+# Colcon build artifacts
 build/
 install/
 log/
+
+# Previous submodules
 src/Universal_Robots_ROS2_GZ_Simulation/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
