@@ -24,7 +24,7 @@ setup(
         (os.path.join('share', package_name, 'scripts'),
             glob(os.path.join('scripts', '*.sh'))),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'ultralytics'],
     zip_safe=True,
     maintainer='jack',
     maintainer_email='jack@todo.todo',
@@ -32,7 +32,10 @@ setup(
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [],
+        'console_scripts': [
+            'auto_navigator = tb4_autonav_system.auto_navigator:main',
+            'yolo_detector = tb4_autonav_system.yolo_detector:main',
+        ],
     },
 )
 
